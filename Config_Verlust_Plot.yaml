@@ -1,9 +1,12 @@
 # Pfade
-Pfad Datei: 'C:\Users\ma1011572\OneDrive\MSc_EnergyAndEnvironment\P9\18_Paperdraft\toolberechnung_pumpe_fhnw\csv\Batterieberechnungen\LiAkku_Anlage1.csv'
+Pfad Datei: 'C:\Users\ma1011572\OneDrive\MSc_EnergyAndEnvironment\P9\18_Paperdraft\alt\toolberechnung_pumpe_fhnw\csv\Batterieberechnungen\LiAkku_Anlage1.csv'
 Pfad Resultate: 'C:\Users\ma1011572\OneDrive\MSc_EnergyAndEnvironment\P9\18_Paperdraft\Bilder_und_DatenblattPumpe'
 
-# Dateiname Plot:
+# Dateiname Plot Verluste:
 Dateiname: 'Verluste_Windisch_50W_70Autarkie_Li'
+
+# Dateiname Plot genutzte energie, Verluste und Überschuss:
+Dateiname Gesamtenergie: 'Energienutzung_Windisch_50W_70Autarkie_Li'
 
 # MPPT-Eigenschaften wie sie in den Berechnungen eingestellt waren
 MPPT_Wirkungsgrad: 98

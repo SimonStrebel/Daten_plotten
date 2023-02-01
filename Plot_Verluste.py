@@ -14,7 +14,8 @@ with open(f'Config_Verlust_Plot.yaml', 'r') as Inputs:
 
 Pfad_Datei = inputs['Pfad Datei']
 Pfad_Resultate = inputs['Pfad Resultate']
-Dateiname = inputs['Dateiname']
+Dateiname_Verlustplot = inputs['Dateiname']
+Dateiname_Gesamtenergieplot = inputs['Dateiname Gesamtenergie']
 MPPT_Wirkungsgrad = inputs['MPPT_Wirkungsgrad']/100
 MPPT_Eigenverbrauch = inputs['MPPT_Eigenverbrauch']
 MPPT_Trackingverlust = inputs['MPPT_Trackingverlust']
@@ -22,6 +23,9 @@ MPPT_Trackingverlust = inputs['MPPT_Trackingverlust']
 # CSV-Datei einlesen
 df_Daten = pd.read_csv(f"{Pfad_Datei}", index_col='Datum und Zeit')
 df_Daten.index = pd.to_datetime(df_Daten.index, format='%Y-%m-%d %H:%M:%S')
+
+# Anzahl Jahre Datensatz bestimmen
+anzahl_jahre = df_Daten.index.year.max() - df_Daten.index.year.min() + 1
 
 # Spaltenname PV-Leistung und Batteriestand bestimmen, damit diese Spalte genutzt werden kann
 df_pvleistung = df_Daten.filter(regex='Leistung PV')
@@ -104,6 +108,39 @@ plt.gcf().gca().add_artist(centre_circle)
 
 # Plot zeigen und speichern
 plt.tight_layout()
+# plt.show()
+# speichern_unter = Pfad_Resultate
+# fig.savefig(f'{Pfad_Resultate}/{Dateiname_Verlustplot}.jpg', bbox_inches='tight', dpi=500)
+plt.clf()
+plt.close()
+
+# Pie-Chart Genutzte Energie und Verluste erstellen
+summe_verluste = Verluste_Wirkungsgrad_ges + Verluste_Tracking_ges + Verluste_Eigenverbrauch_ges + Weitere_Verluste
+summe_gesamt = Genutzte_Energie + Verluste_PV_Überschuss_ges + summe_verluste
+names = f'Genutzte Energie \n{Genutzte_Energie/anzahl_jahre:.2f} kWh \n{(Genutzte_Energie/summe_gesamt)*100:.1f} %', f'PV-Überschuss \n{Verluste_PV_Überschuss_ges/anzahl_jahre:.2f} kWh \n{(Verluste_PV_Überschuss_ges/summe_gesamt)*100:.1f} %', f'Verluste \n{summe_verluste/anzahl_jahre:.2f} kWh \n{(summe_verluste/summe_gesamt)*100:.1f} %'
+sizes = [Genutzte_Energie/anzahl_jahre, Verluste_PV_Überschuss_ges/anzahl_jahre, summe_verluste/anzahl_jahre]
+colors = ['#4F6272', '#B7C3F3', '#DD7596']
+
+fig, ax1 = plt.subplots(figsize=(12, 6))
+#fig.suptitle(f'Mein Titel', fontweight='bold')
+patches, texts = ax1.pie(sizes, labels=names, labeldistance=1.15, wedgeprops={'linewidth' : 5, 'edgecolor' : 'white'}, colors=colors, pctdistance=0.7, startangle=90)
+ax1.axis('equal')  # Ensures that pie is drawn as a circle
+
+# Zusatzinfos in Textblock
+uberschrift = f' Energie pro Jahr'
+plt.figtext(0.78, 0.78, uberschrift, fontsize=14, weight='bold', horizontalalignment ="left", verticalalignment ="bottom")
+
+text = f' Verluste Wirkungsgrad: \n {Verluste_Wirkungsgrad_ges/anzahl_jahre:.2f} kWh \n\n Verluste Tracking: \n {Verluste_Tracking_ges/anzahl_jahre:.2f} kWh \n\n Verluste Eigenverbrauch: \n {Verluste_Eigenverbrauch_ges/anzahl_jahre:.2f} kWh \n\n PV-Überschuss: \n {Verluste_PV_Überschuss_ges/anzahl_jahre:.2f} kWh \n\n Weitere Verluste: \n {Weitere_Verluste/anzahl_jahre:.2f} kWh \n\n Genutzte Energie: \n {Genutzte_Energie/anzahl_jahre:.2f} kWh'
+plt.figtext(0.78, 0.76, text, fontsize=14, style='italic', horizontalalignment ="left", verticalalignment ="top")
+
+# Donut erstellen (weisser Kreis im Zentrum)
+centre_circle = plt.Circle((0, 0), 0.4, color='white')
+plt.gcf().gca().add_artist(centre_circle)
+
+# Plot zeigen und speichern
+plt.tight_layout()
 plt.show()
-speichern_unter = Pfad_Resultate
-fig.savefig(f'{Pfad_Resultate}/{Dateiname}.jpg', bbox_inches='tight', dpi=500)
+# speichern_unter = Pfad_Resultate
+# fig.savefig(f'{Pfad_Resultate}/{Dateiname_Gesamtenergieplot}.jpg', bbox_inches='tight', dpi=500)
+plt.clf()
+plt.close()
