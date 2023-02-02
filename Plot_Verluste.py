@@ -96,11 +96,11 @@ for autotext in autotexts:
 ax1.axis('equal')  # Ensures that pie is drawn as a circle
 
 # Zusatzinfos in Textblock
-uberschrift = f' Alle Verluste'
-plt.figtext(0.78, 0.78, uberschrift, fontsize=14, weight='bold', horizontalalignment ="left", verticalalignment ="bottom")
+uberschrift = f' Energie pro Jahr'
+plt.figtext(0.78, 0.82, uberschrift, fontsize=14, weight='bold', horizontalalignment ="left", verticalalignment ="bottom")
 
 text = f' Wirkungsgrad: \n {Verluste_Wirkungsgrad_ges:.2f} kWh \n\n Tracking: \n {Verluste_Tracking_ges:.2f} kWh \n\n Eigenverbrauch: \n {Verluste_Eigenverbrauch_ges:.2f} kWh \n\n PV-Überschuss: \n {Verluste_PV_Überschuss_ges:.2f} kWh \n\n Weitere Verluste: \n {Weitere_Verluste:.2f} kWh \n\n Genutzte Energie: \n {Genutzte_Energie:.2f} kWh'
-plt.figtext(0.78, 0.76, text, fontsize=14, style='italic', horizontalalignment ="left", verticalalignment ="top")
+plt.figtext(0.78, 0.8, text, fontsize=14, style='italic', horizontalalignment ="left", verticalalignment ="top")
 
 # Donut erstellen (weisser Kreis im Zentrum)
 centre_circle = plt.Circle((0, 0), 0.4, color='white')
@@ -108,9 +108,10 @@ plt.gcf().gca().add_artist(centre_circle)
 
 # Plot zeigen und speichern
 plt.tight_layout()
-# plt.show()
-# speichern_unter = Pfad_Resultate
-# fig.savefig(f'{Pfad_Resultate}/{Dateiname_Verlustplot}.jpg', bbox_inches='tight', dpi=500)
+fig.subplots_adjust(left=0.05, right=0.75)  #nach links verschieben, damit nicht mit Text überschneidend
+plt.show()
+speichern_unter = Pfad_Resultate
+fig.savefig(f'{Pfad_Resultate}/{Dateiname_Verlustplot}.jpg', bbox_inches='tight', dpi=500)
 plt.clf()
 plt.close()
 
@@ -139,8 +140,9 @@ plt.gcf().gca().add_artist(centre_circle)
 
 # Plot zeigen und speichern
 plt.tight_layout()
+fig.subplots_adjust(left=0.05, right=0.75)  #nach links verschieben, damit nicht mit Text überschneidend
 plt.show()
-# speichern_unter = Pfad_Resultate
-# fig.savefig(f'{Pfad_Resultate}/{Dateiname_Gesamtenergieplot}.jpg', bbox_inches='tight', dpi=500)
+speichern_unter = Pfad_Resultate
+fig.savefig(f'{Pfad_Resultate}/{Dateiname_Gesamtenergieplot}.jpg', bbox_inches='tight', dpi=500)
 plt.clf()
 plt.close()
