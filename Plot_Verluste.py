@@ -83,13 +83,17 @@ Genutzte_Energie = df_Daten['Genutzte Energie [Wh]'].sum()/1000
 # Input abzüglich aller Verluste und der genutzten Energie [kWh]
 Weitere_Verluste = Energie_IN - Verluste_Wirkungsgrad_ges - Verluste_Tracking_ges - Verluste_Eigenverbrauch_ges - Verluste_PV_Überschuss_ges - Genutzte_Energie
 
-# Pie-Chart erstellen
-names = f'Wirkungsgrad \n{Verluste_Wirkungsgrad_ges:.2f} kWh', f'Tracking \n{Verluste_Tracking_ges:.2f} kWh', f'Eigenverbrauch \n{Verluste_Eigenverbrauch_ges:.2f} kWh'
+# Summen für Jahresdurchschnitt berechnen:
+summe_verluste = Verluste_Wirkungsgrad_ges + Verluste_Tracking_ges + Verluste_Eigenverbrauch_ges + Weitere_Verluste
+summe_gesamt = Genutzte_Energie + Verluste_PV_Überschuss_ges + summe_verluste
+
+# Pie-Chart Verluste Laderegler erstellen
+names = f'Wirkungsgrad \n{Verluste_Wirkungsgrad_ges/anzahl_jahre:.2f} kWh', f'Tracking \n{Verluste_Tracking_ges/anzahl_jahre:.2f} kWh', f'Eigenverbrauch \n{Verluste_Eigenverbrauch_ges/anzahl_jahre:.2f} kWh'
 sizes = [Verluste_Wirkungsgrad_ges, Verluste_Tracking_ges, Verluste_Eigenverbrauch_ges]
 colors = ['#4F6272', '#B7C3F3', '#DD7596']
 
 fig, ax1 = plt.subplots(figsize=(12, 6))
-#fig.suptitle(f'Mein Titel', fontweight='bold')
+fig.suptitle(f'Verluste Laderegler in einem Jahr', fontweight='bold')
 patches, texts, autotexts = ax1.pie(sizes, labels=names, labeldistance=1.15, wedgeprops={'linewidth' : 5, 'edgecolor' : 'white'}, colors=colors, autopct='%1.2f%%', pctdistance=0.7, startangle=90)
 for autotext in autotexts:
     autotext.set_color('white')
@@ -99,7 +103,7 @@ ax1.axis('equal')  # Ensures that pie is drawn as a circle
 uberschrift = f' Energie pro Jahr'
 plt.figtext(0.78, 0.82, uberschrift, fontsize=14, weight='bold', horizontalalignment ="left", verticalalignment ="bottom")
 
-text = f' Wirkungsgrad: \n {Verluste_Wirkungsgrad_ges:.2f} kWh \n\n Tracking: \n {Verluste_Tracking_ges:.2f} kWh \n\n Eigenverbrauch: \n {Verluste_Eigenverbrauch_ges:.2f} kWh \n\n PV-Überschuss: \n {Verluste_PV_Überschuss_ges:.2f} kWh \n\n Weitere Verluste: \n {Weitere_Verluste:.2f} kWh \n\n Genutzte Energie: \n {Genutzte_Energie:.2f} kWh'
+text = f' Wirkungsgrad: \n {Verluste_Wirkungsgrad_ges/anzahl_jahre:.2f} kWh \n\n Tracking: \n {Verluste_Tracking_ges/anzahl_jahre:.2f} kWh \n\n Eigenverbrauch: \n {Verluste_Eigenverbrauch_ges/anzahl_jahre:.2f} kWh \n\n PV-Überschuss: \n {Verluste_PV_Überschuss_ges/anzahl_jahre:.2f} kWh \n\n Weitere Verluste: \n {Weitere_Verluste/anzahl_jahre:.2f} kWh \n\n Genutzte Energie: \n {Genutzte_Energie/anzahl_jahre:.2f} kWh'
 plt.figtext(0.78, 0.8, text, fontsize=14, style='italic', horizontalalignment ="left", verticalalignment ="top")
 
 # Donut erstellen (weisser Kreis im Zentrum)
@@ -116,14 +120,12 @@ plt.clf()
 plt.close()
 
 # Pie-Chart Genutzte Energie und Verluste erstellen
-summe_verluste = Verluste_Wirkungsgrad_ges + Verluste_Tracking_ges + Verluste_Eigenverbrauch_ges + Weitere_Verluste
-summe_gesamt = Genutzte_Energie + Verluste_PV_Überschuss_ges + summe_verluste
-names = f'Genutzte Energie \n{Genutzte_Energie/anzahl_jahre:.2f} kWh \n{(Genutzte_Energie/summe_gesamt)*100:.1f} %', f'PV-Überschuss \n{Verluste_PV_Überschuss_ges/anzahl_jahre:.2f} kWh \n{(Verluste_PV_Überschuss_ges/summe_gesamt)*100:.1f} %', f'Verluste \n{summe_verluste/anzahl_jahre:.2f} kWh \n{(summe_verluste/summe_gesamt)*100:.1f} %'
+names = f'Genutzte Energie \n{(Genutzte_Energie/summe_gesamt)*100:.1f} %', f'PV-Überschuss \n{(Verluste_PV_Überschuss_ges/summe_gesamt)*100:.1f} %', f'Verluste \n{(summe_verluste/summe_gesamt)*100:.1f} %'
 sizes = [Genutzte_Energie/anzahl_jahre, Verluste_PV_Überschuss_ges/anzahl_jahre, summe_verluste/anzahl_jahre]
 colors = ['#4F6272', '#B7C3F3', '#DD7596']
 
 fig, ax1 = plt.subplots(figsize=(12, 6))
-#fig.suptitle(f'Mein Titel', fontweight='bold')
+fig.suptitle(f'Verteilung Energie Off-Grid-Anlage', fontweight='bold')
 patches, texts = ax1.pie(sizes, labels=names, labeldistance=1.15, wedgeprops={'linewidth' : 5, 'edgecolor' : 'white'}, colors=colors, pctdistance=0.7, startangle=90)
 ax1.axis('equal')  # Ensures that pie is drawn as a circle
 
