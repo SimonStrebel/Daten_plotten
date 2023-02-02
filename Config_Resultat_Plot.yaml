@@ -1,5 +1,5 @@
 # Pfad zur Datei, die ausgewertet werden soll:
-Pfad_Datei_Resultate: 'C:\Users\ma1011572\OneDrive\MSc_EnergyAndEnvironment\P9\18_Paperdraft\toolberechnung_pumpe_fhnw\csv\Resultate_alle_Anlagen.csv'
+Pfad_Datei_Resultate: 'C:\Users\ma1011572\OneDrive\MSc_EnergyAndEnvironment\P9\18_Paperdraft\Berechnung_Windisch\csv\Resultate_alle_Anlagen.csv'
 
-# Pfad zur ablage des Plots:
-Pfad_Plot_Poster: 'C:\Users\ma1011572\OneDrive\MSc_EnergyAndEnvironment\P9\19_Poster\Grafiken'
+# Pfad zur Ablage des Plots:
+Pfad_Plot: 'C:\Users\ma1011572\OneDrive\MSc_EnergyAndEnvironment\P9\18_Paperdraft\Bilder'
