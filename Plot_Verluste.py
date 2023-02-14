@@ -88,12 +88,12 @@ summe_verluste = Verluste_Wirkungsgrad_ges + Verluste_Tracking_ges + Verluste_Ei
 summe_gesamt = Genutzte_Energie + Verluste_PV_Überschuss_ges + summe_verluste
 
 # Pie-Chart Verluste Laderegler erstellen
-names = f'Wirkungsgrad \n{Verluste_Wirkungsgrad_ges/anzahl_jahre:.2f} kWh', f'Tracking \n{Verluste_Tracking_ges/anzahl_jahre:.2f} kWh', f'Eigenverbrauch \n{Verluste_Eigenverbrauch_ges/anzahl_jahre:.2f} kWh'
-sizes = [Verluste_Wirkungsgrad_ges, Verluste_Tracking_ges, Verluste_Eigenverbrauch_ges]
-colors = ['#4F6272', '#B7C3F3', '#DD7596']
+names = f'Wirkungsgrad \n{Verluste_Wirkungsgrad_ges/anzahl_jahre:.2f} kWh', f'Tracking \n{Verluste_Tracking_ges/anzahl_jahre:.2f} kWh', f'Eigenverbrauch \n{Verluste_Eigenverbrauch_ges/anzahl_jahre:.2f} kWh', f'Weitere Verluste \n{Weitere_Verluste/anzahl_jahre:.2f} kWh'
+sizes = [Verluste_Wirkungsgrad_ges, Verluste_Tracking_ges, Verluste_Eigenverbrauch_ges, Weitere_Verluste]
+colors = ['#4F6272', '#B7C3F3', '#DD7596', '#FAC205']
 
 fig, ax1 = plt.subplots(figsize=(12, 6))
-fig.suptitle(f'Verluste Laderegler in einem Jahr', fontweight='bold')
+fig.suptitle(f'Verteilung Verluste Off-Grid-Anlage', fontweight='bold')
 patches, texts, autotexts = ax1.pie(sizes, labels=names, labeldistance=1.15, wedgeprops={'linewidth' : 5, 'edgecolor' : 'white'}, colors=colors, autopct='%1.2f%%', pctdistance=0.7, startangle=90)
 for autotext in autotexts:
     autotext.set_color('white')
@@ -101,10 +101,10 @@ ax1.axis('equal')  # Ensures that pie is drawn as a circle
 
 # Zusatzinfos in Textblock
 uberschrift = f' Energie pro Jahr'
-plt.figtext(0.78, 0.82, uberschrift, fontsize=14, weight='bold', horizontalalignment ="left", verticalalignment ="bottom")
+plt.figtext(0.75, 0.78, uberschrift, fontsize=14, weight='bold', horizontalalignment ="left", verticalalignment ="bottom")
 
 text = f' Wirkungsgrad: \n {Verluste_Wirkungsgrad_ges/anzahl_jahre:.2f} kWh \n\n Tracking: \n {Verluste_Tracking_ges/anzahl_jahre:.2f} kWh \n\n Eigenverbrauch: \n {Verluste_Eigenverbrauch_ges/anzahl_jahre:.2f} kWh \n\n PV-Überschuss: \n {Verluste_PV_Überschuss_ges/anzahl_jahre:.2f} kWh \n\n Weitere Verluste: \n {Weitere_Verluste/anzahl_jahre:.2f} kWh \n\n Genutzte Energie: \n {Genutzte_Energie/anzahl_jahre:.2f} kWh'
-plt.figtext(0.78, 0.8, text, fontsize=14, style='italic', horizontalalignment ="left", verticalalignment ="top")
+plt.figtext(0.75, 0.76, text, fontsize=14, style='italic', horizontalalignment ="left", verticalalignment ="top")
 
 # Donut erstellen (weisser Kreis im Zentrum)
 centre_circle = plt.Circle((0, 0), 0.4, color='white')
@@ -112,7 +112,7 @@ plt.gcf().gca().add_artist(centre_circle)
 
 # Plot zeigen und speichern
 plt.tight_layout()
-fig.subplots_adjust(left=0.05, right=0.75)  #nach links verschieben, damit nicht mit Text überschneidend
+fig.subplots_adjust(left=0.05, right=0.65)  #nach links verschieben, damit nicht mit Text überschneidend
 plt.show()
 speichern_unter = Pfad_Resultate
 fig.savefig(f'{Pfad_Resultate}/{Dateiname_Verlustplot}.jpg', bbox_inches='tight', dpi=500)

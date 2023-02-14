@@ -3,3 +3,6 @@ Pfad_Datei_Resultate: 'C:\Users\ma1011572\OneDrive\MSc_EnergyAndEnvironment\P9\1
 
 # Pfad zur Ablage des Plots:
 Pfad_Plot: 'C:\Users\ma1011572\OneDrive\MSc_EnergyAndEnvironment\P9\18_Paperdraft\Bilder'
+
+# Pfad zur Ablage des Poster-Plots (quadratisches Format):
+Pfad_Plot_Poster: 'C:\Users\ma1011572\OneDrive\MSc_EnergyAndEnvironment\P9\19_Poster\Grafiken'
